@@ -1,6 +1,4 @@
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -31,5 +29,27 @@ public class Authentication {
 
         JSONObject jsonObject = new JSONObject(response.body().string());
         return jsonObject.getString("access_token");
+    }
+
+    public JSONObject connect(String consumer_key, String consumer_secret, String requestJson, String url) throws
+            IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        String accessToken = authenticate(consumer_key, consumer_secret);
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, requestJson);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("content-type", "application/json")
+                .addHeader("authorization", "Bearer " + accessToken)
+                .addHeader("cache-control", "no-cache")
+
+                .build();
+
+        Response response = client.newCall(request).execute();
+        //System.out.println(response);
+        JSONObject B2BRequestResponse = new JSONObject(response.body().string());
+        return B2BRequestResponse;
     }
 }
