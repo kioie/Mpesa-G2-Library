@@ -1,4 +1,3 @@
-import okhttp3.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,6 +22,7 @@ public class B2B {
                 "Remarks": "", "QueueTimeOutURL": "", "ResultURL": ""}*/
         String password = lipaNaMpesaShortcode + lipaNaMpesaPasskey + timestamp;
         String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes("UTF-8"));
+        String url = "https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest";
 
         String accountReference = RandomStringUtils.randomAlphabetic(10);
 
@@ -48,30 +48,14 @@ public class B2B {
         jsonObject.put("QueueTimeOutURL", queueTimeOutURL);
         jsonObject.put("ResultURL", resultURL);
 
-
         jsonArray.put(jsonObject);
 
         String requestJson = jsonArray.toString().replaceAll("[\\[\\]]", "");
         System.out.println(requestJson);
 
         Authentication authenticator = new Authentication();
-        OkHttpClient client = new OkHttpClient();
 
-        String accessToken = authenticator.authenticate(consumer_key, consumer_secret);
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, requestJson);
-        Request request = new Request.Builder()
-                .url("https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest")
-                .post(body)
-                .addHeader("content-type", "application/json")
-                .addHeader("authorization", "Bearer " + accessToken)
-                .addHeader("cache-control", "no-cache")
-
-                .build();
-
-        Response response = client.newCall(request).execute();
-        JSONObject B2BRequestResponse = new JSONObject(response.body().string());
-        return B2BRequestResponse;
+        return authenticator.connect(consumer_key, consumer_secret, requestJson, url);
 
     }
 }
