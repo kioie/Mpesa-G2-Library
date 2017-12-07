@@ -22,12 +22,19 @@ public class Test {
         String LipaNaMpesaOnlinePasskey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
 
 
-        B2B b2B = new B2B();
-        System.out.println(b2B.Request(Consumer_Key, Consumer_Secret, LipaNaMpesaOnlineShortcode,
-                LipaNaMpesaOnlinePasskey, timeStamp, Initiator_Name, "BusinessPayBill", "4",
-                "4", "1", LipaNaMpesaOnlineShortcode, Shortcode_1, "tst",
-                "https://google.com/api", "https://google.com/api"));
+        /*B2B b2B = new B2B();
+        System.out.println(b2B.Request(Consumer_Key,Consumer_Secret,LipaNaMpesaOnlineShortcode,
+                LipaNaMpesaOnlinePasskey,timeStamp,Initiator_Name,"BusinessPayBill","4",
+                "4","1",LipaNaMpesaOnlineShortcode,Shortcode_1,"test","https://google.com/api",
+                "https://google.com/api"));
+        AccountBalance acB = new AccountBalance();
+        System.out.println(acB.Inquiry(Consumer_Key, Consumer_Secret, LipaNaMpesaOnlineShortcode,
+                LipaNaMpesaOnlinePasskey, timeStamp, Initiator_Name, "4", "test", "https://google.com",
+                "https://google.com/api"));*/
 
+        LipaNaMpesaOnline lipa = new LipaNaMpesaOnline();
+        System.out.println(lipa.payment(Consumer_Key, Consumer_Secret, LipaNaMpesaOnlineShortcode, LipaNaMpesaOnlinePasskey, "1",
+                "254724478905", "https://google.com/api", "https://google.com/api/test", "test"));
     }
 
 }

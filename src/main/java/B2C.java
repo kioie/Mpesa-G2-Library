@@ -31,8 +31,6 @@ public class B2C {
         jsonObject.put("QueueTimeOutURL", queueTimeOutURL);
         jsonObject.put("ResultURL", resultURL);
         jsonObject.put("Occassion", occassion);
-
-
         jsonArray.put(jsonObject);
 
         String requestJson = jsonArray.toString().replaceAll("[\\[\\]]", "");
