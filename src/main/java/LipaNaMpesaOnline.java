@@ -38,7 +38,7 @@ public class LipaNaMpesaOnline {
 
     public JSONObject payment(String consumer_key, String consumer_secret, String lipaNaMpesaShortcode,
                               String lipaNaMpesaPasskey, String amount, String phoneNumber, String callBackURL,
-                              String accountName, String queueTimeOutURL, String transactionDesc) throws IOException {
+                              String accountNumber, String queueTimeOutURL, String transactionDesc) throws IOException {
 
         String url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
         String timeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
@@ -56,7 +56,7 @@ public class LipaNaMpesaOnline {
         jsonObject.put("PartyA", phoneNumber);
         jsonObject.put("PartyB", lipaNaMpesaShortcode);
         jsonObject.put("CallBackURL", callBackURL);
-        jsonObject.put("AccountReference", accountName); //Name of the company/owner of the paybill that will be
+        jsonObject.put("AccountReference", accountNumber); //Name of the company/owner of the paybill that will be
         // displayed to the client
         jsonObject.put("QueueTimeOutURL", queueTimeOutURL);
         jsonObject.put("TransactionDesc", transactionDesc);
@@ -65,7 +65,9 @@ public class LipaNaMpesaOnline {
         String requestJson = jsonArray.toString().replaceAll("[\\[\\]]", "");
 
         Authentication authenticator = new Authentication();
+        JSONObject response = authenticator.connect(consumer_key, consumer_secret, requestJson, url);
+        response.put("Timestamp", timeStamp);
 
-        return authenticator.connect(consumer_key, consumer_secret, requestJson, url);
+        return response;
     }
 }

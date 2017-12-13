@@ -48,7 +48,6 @@ public class Authentication {
                 .build();
 
         Response response = client.newCall(request).execute();
-        //System.out.println(response);
         JSONObject B2BRequestResponse = new JSONObject(response.body().string());
         return B2BRequestResponse;
     }
